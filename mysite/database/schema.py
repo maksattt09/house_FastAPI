@@ -1,8 +1,18 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 from .models import StatusChoices, LanguageChoices, PropertyChoices, ConditionChoices
 from datetime import datetime
 
+
+
+class HouseSchema(BaseModel):
+    GrLivArea: int
+    YearBuilt: int
+    GarageCars: int
+    TotalBsmtSF: int
+    FullBath: int
+    OverallQual: int
+    Neighborhood: str
 
 
 class UserProfileInputSchema(BaseModel):
@@ -10,11 +20,11 @@ class UserProfileInputSchema(BaseModel):
     last_name: str
     username: str
     email: EmailStr
-    password: str
     age: Optional[int]
     phone_number: Optional[str]
     role: Optional[StatusChoices]
     preferred_language: Optional[LanguageChoices]
+
 
 
 class UserProfileOutSchema(BaseModel):
@@ -28,8 +38,7 @@ class UserProfileOutSchema(BaseModel):
     role: StatusChoices
     preferred_language: LanguageChoices
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PropertyInputSchema(BaseModel):
@@ -71,8 +80,7 @@ class PropertyOutSchema(BaseModel):
     documents: str
     seller_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ReviewInputSchema(BaseModel):
@@ -90,8 +98,7 @@ class ReviewOutSchema(BaseModel):
     comment: str
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserLoginSchema(BaseModel):
